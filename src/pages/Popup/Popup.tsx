@@ -27,6 +27,7 @@ export function MainInterface() {
               <div className="flex h-full flex-1">
                 <div className="flex h-full flex-1 flex-grow items-start justify-start overflow-clip">
                   <input
+                    type="password"
                     className="flex-1 font-['Roboto'] text-base leading-6 text-gray-700 focus-visible:outline-none"
                     placeholder="Github API Key"
                   />
@@ -47,7 +48,10 @@ export function MainInterface() {
       <div className="flex w-full items-center justify-between">
         <div className="gap-2">
           <div className="flex items-start justify-start gap-2">
-            <div className="h-[17px] w-[17px] rounded-[3px] border border-solid border-gray-400 bg-[rgba(242,242,242,1)]" />
+            <input
+              type="checkbox"
+              className="h-[17px] w-[17px] rounded-[3px] border border-solid border-gray-400 bg-[rgba(242,242,242,1)]"
+            />
             <div className="gap-1.5">
               <p className="font-['Inter'] text-sm font-medium leading-[normal] text-gray-700">
                 Enabled
@@ -55,7 +59,13 @@ export function MainInterface() {
             </div>
           </div>
         </div>
-        <div className="h-[38px] w-10 bg-[url(https://uortjlczjmucmpaqqhqm.supabase.co/storage/v1/object/public/firejet-converted-images/7427/56a5c813cb79fbe555305cdedd6a17076c7dd559.webp)] bg-cover" />
+        {/* TODO: Add a MADE WITH kinda sticker thingamajig */}
+        <div
+          onClick={() => {
+            window.open('https://www.firejet.io', '_blank');
+          }}
+          className="cursor-pointer h-[38px] w-10 bg-[url(https://uortjlczjmucmpaqqhqm.supabase.co/storage/v1/object/public/firejet-converted-images/7427/56a5c813cb79fbe555305cdedd6a17076c7dd559.webp)] bg-cover"
+        />
       </div>
     </div>
   );
