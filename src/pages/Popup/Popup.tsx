@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import sendMidEnd from './util/sendMidEnd';
 
 export default function Popup() {
   useEffect(() => {
@@ -11,47 +12,84 @@ export default function Popup() {
 
 export function MainInterface() {
   return (
-    <div className="inline-flex">
-      <div className="flex w-[565px] flex-col items-center justify-center overflow-clip bg-white p-3">
-        <div className="flex">
-          <div className="h-[538px] w-[541px] overflow-clip rounded-xl bg-[rgba(1,22,39,1)]">
-            <div className="flex h-full flex-1 flex-grow flex-col items-start justify-start gap-2.5 p-6">
-              <p className="font-['Roboto_Mono'] text-xs font-medium leading-[normal] text-[rgba(199,146,234,1)]">
-                Copy your code here...
+    <div className="inline-flex flex-col items-start justify-start gap-2.5 bg-white px-2.5 pt-[17px] pb-[17px]">
+      <div className="w-[280px] gap-[3px]">
+        <div className="flex w-full flex-col items-start justify-start rounded border border-solid border-[rgba(0,0,0,0.23)] px-3">
+          <div className="flex h-0.5 items-center justify-start gap-2.5 bg-white px-1">
+            <div>
+              <p className="font-['Roboto'] text-xs leading-3 text-[rgba(0,0,0,0.6)] bg-white">
+                API Key
               </p>
             </div>
           </div>
-        </div>
-        <div className="flex w-full items-center justify-start gap-2.5 rounded-b-xl py-2">
-          <div className="flex flex-1 flex-grow items-center justify-start gap-2.5">
-            <GenerateButton firejetVariant="STATE=ENABLED_TYPE0" />
-            <div className="flex">
-              <div className="relative h-[17px] w-[281px] gap-2 overflow-clip">
-                <div className="absolute left-[0] top-[0] gap-2">
-                  <div className="flex w-[281px] items-center justify-start gap-1.5">
-                    <div>
-                      <p className="font-['Inter'] text-sm font-medium leading-[normal] text-gray-700">
-                        https://www.github.gist.whateverlink.crrffom
-                      </p>
-                    </div>
-                  </div>
+          <div className="flex w-full">
+            <div className="flex w-full items-start justify-start gap-2 overflow-clip pt-[15px] pb-[15px]">
+              <div className="flex h-full flex-1">
+                <div className="flex h-full flex-1 flex-grow items-start justify-start overflow-clip">
+                  <input
+                    className="flex-1 font-['Roboto'] text-base leading-6 text-gray-700 focus-visible:outline-none"
+                    placeholder="Github API Key"
+                  />
+                  <BxHelpCircle
+                    onClick={() => {
+                      window.open(
+                        'https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token',
+                        '_blank'
+                      );
+                    }}
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex items-start justify-start gap-2.5">
-            <div className="h-[38px] w-10 bg-[url(https://uortjlczjmucmpaqqhqm.supabase.co/storage/v1/object/public/firejet-converted-images/7402/56a5c813cb79fbe555305cdedd6a17076c7dd559.webp)] bg-cover" />
-            <div className="flex h-[39px] items-center justify-center gap-2.5 rounded-xl bg-[rgba(76,84,95,1)] p-2">
-              <CopyButton />
+        </div>
+      </div>
+      <div className="flex w-full items-center justify-between">
+        <div className="gap-2">
+          <div className="flex items-start justify-start gap-2">
+            <div className="h-[17px] w-[17px] rounded-[3px] border border-solid border-gray-400 bg-[rgba(242,242,242,1)]" />
+            <div className="gap-1.5">
+              <p className="font-['Inter'] text-sm font-medium leading-[normal] text-gray-700">
+                Enabled
+              </p>
             </div>
           </div>
         </div>
+        <div className="h-[38px] w-10 bg-[url(https://uortjlczjmucmpaqqhqm.supabase.co/storage/v1/object/public/firejet-converted-images/7427/56a5c813cb79fbe555305cdedd6a17076c7dd559.webp)] bg-cover" />
       </div>
     </div>
   );
 }
 
-export function GenerateButton(props: GenerateButtonInterface) {
+interface HelpCircleProps {
+  onClick: () => void;
+}
+
+function BxHelpCircle(props: HelpCircleProps) {
+  return (
+    <div onClick={props.onClick} className="h-6 w-6 cursor-pointer">
+      <svg
+        width="100%"
+        height="100%"
+        preserveAspectRatio="none"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 6C10.9571 6.00132 9.95723 6.41622 9.21974 7.1537C8.48226 7.89118 8.06736 8.89104 8.06604 9.934H10.066C10.066 8.867 10.934 8 12 8C13.066 8 13.934 8.867 13.934 9.934C13.934 10.532 13.453 10.966 12.718 11.56C12.4779 11.7481 12.2473 11.948 12.027 12.159C11.029 13.156 11 14.215 11 14.333V15H13L12.999 14.367C13 14.351 13.032 13.981 13.44 13.574C13.59 13.424 13.779 13.274 13.975 13.116C14.754 12.485 15.933 11.532 15.933 9.934C15.9322 8.89106 15.5177 7.89104 14.7803 7.15347C14.0429 6.41591 13.043 6.00106 12 6ZM11 16H13V18H11V16Z"
+          fill="#374151"
+        />
+        <path
+          d="M12 2C6.486 2 2 6.486 2 12C2 17.514 6.486 22 12 22C17.514 22 22 17.514 22 12C22 6.486 17.514 2 12 2ZM12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4C16.411 4 20 7.589 20 12C20 16.411 16.411 20 12 20Z"
+          fill="#374151"
+        />
+      </svg>
+    </div>
+  );
+}
+
+function GenerateButton(props: GenerateButtonInterface) {
   return (
     <>
       {props.firejetVariant === 'STATE=ENABLED_TYPE0' && (
@@ -76,7 +114,7 @@ interface GenerateButtonInterface {
   firejetVariant: 'STATE=ENABLED_TYPE0';
 }
 
-export function FluentFlashSettings24Filled() {
+function FluentFlashSettings24Filled() {
   return (
     <div className="h-6 w-6">
       <svg
@@ -96,7 +134,7 @@ export function FluentFlashSettings24Filled() {
   );
 }
 
-export function CopyButton() {
+function CopyButton() {
   return (
     <div className="h-6 w-[25px]">
       <svg
