@@ -6,15 +6,14 @@ export default function registerMidEndHandlers(midEndHandlers: MidEndHandlers) {
     ([eventName, midEndHandler]) => {
       const myListenerFunc: Parameters<
         typeof chrome.runtime.onMessage.addListener
-      >[0] = async (req, sender, sendResponse) => {
+      >[0] = (req, sender, sendResponse) => {
         console.log('RECEIVED EVENT:', req.eventName);
         if (req.eventName === eventName) {
-          const result = await midEndHandler(req.eventData);
-          return sendResponse(result);
+          midEndHandler(req.eventData).then((result) => sendResponse(result));
         }
 
         //Send response asynchronously
-        // return true;
+        return true;
       };
 
       chrome.runtime.onMessage.addListener(myListenerFunc);

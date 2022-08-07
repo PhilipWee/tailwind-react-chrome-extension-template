@@ -7,9 +7,6 @@ console.log('Must reload extension for modifications to take effect.');
 
 console.log('dss');
 document.addEventListener('paste', (event) => {
-  console.log('SENDING MID END');
-  console.log(event);
-
   const pasteEvent: PasteProps = {
     //@ts-ignore
     text: (event.clipboardData || window.clipboardData).getData('text'),
@@ -17,6 +14,11 @@ document.addEventListener('paste', (event) => {
   };
 
   sendMidEnd('paste', pasteEvent, (result) => {
-    console.log(result);
+    const gistUrl = result.data.data.html_url;
+    console.log('RESULT', gistUrl);
+    navigator.clipboard.writeText(gistUrl);
+    alert('Gist URL Copied to clipboard!');
   });
+
+  return false;
 });

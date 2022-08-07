@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { useUserData } from './state/user-data';
+import registerMidEndHandlers from '../Background/registerMidEndHandlers';
 import { API_KEY } from './util/constants';
 import sendMidEnd from './util/sendMidEnd';
 
 export default function Popup() {
+  console.log('ZThis is the popup page baby');
   useEffect(() => {
     // Example of how to send a message to eventPage.ts.
     chrome.runtime.sendMessage({ popupMounted: true });
   }, []);
 
+  useEffect(() => {
+    return registerMidEndHandlers({
+      paste: async (data) => {
+        console.log('PASTE IN POPUP', data);
+      },
+    });
+  });
+
   return <MainInterface />;
 }
 
 export function MainInterface() {
-  const userData = useUserData();
-  console.log(userData);
-
   const updateApiKey = (apiKey: string) => {
-    useUserData.setState((oldData) => ({ ...oldData, apiKey }));
+    chrome.storage.sync.set({ apiKey });
   };
 
   const updateEnabled = (enabled: boolean) => {
-    useUserData.setState((oldData) => ({ ...oldData, enabled }));
+    chrome.storage.sync.set({ enabled });
   };
 
   return (
@@ -42,11 +48,7 @@ export function MainInterface() {
                   <input
                     type="password"
                     className="flex-1 font-['Roboto'] text-base leading-6 text-gray-700 focus-visible:outline-none"
-                    placeholder={
-                      userData.apiKey
-                        ? 'Using Saved API Key'
-                        : 'Please enter API Key'
-                    }
+                    placeholder={'Using Saved API Key'}
                     onChange={(e) => updateApiKey(e.target.value)}
                   />
                   <BxHelpCircle

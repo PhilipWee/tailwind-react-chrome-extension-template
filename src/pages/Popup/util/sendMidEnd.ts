@@ -3,5 +3,6 @@ export default function sendMidEnd(
   eventData: any,
   callback?: (data: any) => void
 ) {
+  console.log("SENDING MID END:", eventName)
   chrome.runtime.sendMessage({ eventName, eventData }, callback);
 }
