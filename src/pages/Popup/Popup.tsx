@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useUserData } from './state/user-data';
+import { API_KEY } from './util/constants';
 import sendMidEnd from './util/sendMidEnd';
 
 export default function Popup() {
@@ -11,6 +13,17 @@ export default function Popup() {
 }
 
 export function MainInterface() {
+  const userData = useUserData();
+  console.log(userData);
+
+  const updateApiKey = (apiKey: string) => {
+    useUserData.setState((oldData) => ({ ...oldData, apiKey }));
+  };
+
+  const updateEnabled = (enabled: boolean) => {
+    useUserData.setState((oldData) => ({ ...oldData, enabled }));
+  };
+
   return (
     <div className="inline-flex flex-col items-start justify-start gap-2.5 bg-white px-2.5 pt-[17px] pb-[17px]">
       <div className="w-[280px] gap-[3px]">
@@ -29,7 +42,12 @@ export function MainInterface() {
                   <input
                     type="password"
                     className="flex-1 font-['Roboto'] text-base leading-6 text-gray-700 focus-visible:outline-none"
-                    placeholder="Github API Key"
+                    placeholder={
+                      userData.apiKey
+                        ? 'Using Saved API Key'
+                        : 'Please enter API Key'
+                    }
+                    onChange={(e) => updateApiKey(e.target.value)}
                   />
                   <BxHelpCircle
                     onClick={() => {
@@ -51,6 +69,7 @@ export function MainInterface() {
             <input
               type="checkbox"
               className="h-[17px] w-[17px] rounded-[3px] border border-solid border-gray-400 bg-[rgba(242,242,242,1)]"
+              onChange={(e) => updateEnabled(e.target.checked)}
             />
             <div className="gap-1.5">
               <p className="font-['Inter'] text-sm font-medium leading-[normal] text-gray-700">

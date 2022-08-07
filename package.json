@@ -14,9 +14,12 @@
   },
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.2",
+    "@vscode/vscode-languagedetection": "^1.0.21",
+    "octokit": "^2.0.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hot-loader": "^4.13.0"
+    "react-hot-loader": "^4.13.0",
+    "zustand": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
